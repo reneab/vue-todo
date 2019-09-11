@@ -1,5 +1,8 @@
 # vue-todo-app
 
+A simple Vue.js Todo application.
+Based on the crash course: https://www.youtube.com/watch?v=Wy9q22isx3U  
+
 ## Project setup
 ```
 npm install
