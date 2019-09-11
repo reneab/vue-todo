@@ -11,6 +11,7 @@
 import HelloWorld from "./components/HelloWorld.vue";
 import Todos from "./components/Todos.vue";
 import AddTodo from "./components/AddTodo.vue";
+import axios from 'axios'; // npm library for HTTP requests 
 
 export default {
   name: "app",
@@ -21,11 +22,7 @@ export default {
   },
   data() {
     return {
-      todos: [
-        { id: 1, title: "Wash bike", completed: false },
-        { id: 2, title: "Clean phone", completed: false },
-        { id: 3, title: "Take out the trash", completed: true }
-      ]
+      todos: []
     };
   },
   methods: {
@@ -35,6 +32,11 @@ export default {
     addItem(newTodo) {
       this.todos.push(newTodo);
     }
+  },
+  created() { // equivalent to init method
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3')
+      .then(res => this.todos = res.data)
+      .catch(err => console.error(err))
   }
 };
 </script>
