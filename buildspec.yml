@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
-      - echo "Installing vue cli...""
+      - echo Installing Vue CLI...
       - npm install -g @vue/cli
   build:
     commands:
