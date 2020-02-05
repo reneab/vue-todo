@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 13
+    commands:
+      - echo "Installing vue cli...""
+      - npm install -g @vue/cli
+  build:
+    commands:
+      - echo Build started...
+      - npm run build
+artifacts:
+  files:
+    - dist/**/*
