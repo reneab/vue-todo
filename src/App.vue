@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js Todo list" />
+    <HelloWorld msg="Hi students, this is your todo list!" />
     <AddTodo v-on:add-todo="addItem"/>
     <Todos v-bind:list="todos" v-on:del-todo="deleteItem"/>
   </div>
