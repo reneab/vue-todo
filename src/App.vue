@@ -42,10 +42,8 @@ export default {
       this.todos.push(newTodo);
     }
   },
-  created() {
-    // equivalent to init method
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos?_limit=3")
+  created() { // equivalent to init method
+    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=3")
       .then(res => res.data.forEach(e => this.todos.push(e)))
       .catch(err => this.errorMsg = err);
   }
