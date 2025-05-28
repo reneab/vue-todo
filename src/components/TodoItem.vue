@@ -4,6 +4,7 @@
         <input type="checkbox" v-bind:checked="todo.completed" 
             v-on:change="markComplete">
         {{todo.title}}
+        <span v-if="todo.dueDate" class="due-date"> (Due: {{ todo.dueDate }})</span>
         <button class="del" @click="$emit('del-todo', todo.id)">X</button>
     </p>
   </div>
@@ -27,10 +28,15 @@ export default {
     .todo-item {
         background: #F4F4F4;
         padding: 10px;
-        width: 30%;
+        /* width: 30%; */
         margin-left: auto;
         margin-right: auto;
         text-align: left;
+    }
+
+    .due-date {
+        font-size: 0.8em;
+        color: #666;
     }
 
     .is-complete {
