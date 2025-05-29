@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ 'dark-theme': isDarkMode }">
+    <button @click="toggleTheme">Toggle Theme</button>
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js Todo App" />
     <AddTodo v-on:add-todo="addItem" />
@@ -32,7 +33,8 @@ export default {
           dueDate: null
         }
       ],
-      errorMsg: ""
+      errorMsg: "",
+      isDarkMode: false
     };
   },
   methods: {
@@ -41,6 +43,9 @@ export default {
     },
     addItem(newTodo) {
       this.todos.push(newTodo);
+    },
+    toggleTheme() {
+      this.isDarkMode = !this.isDarkMode;
     }
   },
   created() { // equivalent to init method
@@ -66,4 +71,19 @@ img {
 }
 
 .error { color: crimson}
+
+.dark-theme {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.dark-theme button {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+.dark-theme .error {
+  color: #ff69b4; /* A lighter crimson/pink */
+}
 </style>
