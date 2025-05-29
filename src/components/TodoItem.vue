@@ -5,6 +5,7 @@
             v-on:change="markComplete">
         {{todo.title}}
         <span v-if="todo.dueDate" class="due-date"> (Due: {{ todo.dueDate }})</span>
+        <span v-if="todo.createdOn" class="created-date"> (Created: {{ new Date(todo.createdOn).toLocaleDateString() }})</span>
         <button class="del" @click="$emit('del-todo', todo.id)">X</button>
     </p>
   </div>
@@ -18,7 +19,8 @@ export default {
     },
     methods: {
         markComplete() {
-            this.todo.completed = !this.todo.completed;
+            // this.todo.completed = !this.todo.completed; // Remove this line
+            this.$emit('toggle-complete', this.todo);
         }
     }
 }
@@ -37,6 +39,12 @@ export default {
     .due-date {
         font-size: 0.8em;
         color: #666;
+    }
+
+    .created-date {
+        font-size: 0.75em;
+        color: #777;
+        margin-left: 5px;
     }
 
     .is-complete {

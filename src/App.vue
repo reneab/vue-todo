@@ -4,7 +4,7 @@
     <HelloWorld msg="Welcome to Your Vue.js Todo App" />
     <AddTodo v-on:add-todo="addItem" />
     <p class="error">{{ errorMsg }}</p>
-    <Todos v-bind:list="todos" v-on:del-todo="deleteItem" />
+    <Todos v-bind:list="todos" v-on:del-todo="deleteItem" v-on:toggle-complete="toggleComplete" />
   </div>
 </template>
 
@@ -13,7 +13,6 @@ import HelloWorld from "./components/HelloWorld.vue";
 import Todos from "./components/Todos.vue";
 import AddTodo from "./components/AddTodo.vue";
 import axios from "axios"; // npm library for HTTP requests
-import uuid from 'uuid';
 
 export default {
   name: "app",
@@ -24,29 +23,42 @@ export default {
   },
   data() {
     return {
-      todos: [
-        {
-          id: uuid.v4(),
-          title: "A default, hard-coded todo",
-          completed: false,
-          dueDate: null
-        }
-      ],
+      todos: [], // Initialize as an empty array
       errorMsg: ""
     };
   },
   methods: {
     deleteItem(id) {
-      this.todos = this.todos.filter(e => e.id !== id);
+      axios.delete(`http://localhost:3000/api/todos/${id}`)
+        .then(() => {
+          this.todos = this.todos.filter(e => e.id !== id);
+        })
+        .catch(err => this.errorMsg = err.message || 'Error deleting item');
     },
-    addItem(newTodo) {
-      this.todos.push(newTodo);
+    addItem(newTodoFromForm) {
+      axios.post("http://localhost:3000/api/todos", { title: newTodoFromForm.title, dueDate: newTodoFromForm.dueDate })
+        .then(res => {
+          this.todos.push(res.data);
+        })
+        .catch(err => this.errorMsg = err.message || 'Error adding item');
+    },
+    toggleComplete(todoItem) {
+      axios.put(`http://localhost:3000/api/todos/${todoItem.id}`, { completed: !todoItem.completed })
+        .then(res => {
+          const index = this.todos.findIndex(t => t.id === res.data.id);
+          if (index !== -1) {
+            this.todos.splice(index, 1, res.data);
+          }
+        })
+        .catch(err => this.errorMsg = err.message || 'Error updating item');
     }
   },
-  created() { // equivalent to init method
-    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=3")
-      .then(res => res.data.forEach(e => this.todos.push({...e, dueDate: null})))
-      .catch(err => this.errorMsg = err);
+  created() {
+    axios.get("http://localhost:3000/api/todos")
+      .then(res => {
+        this.todos = res.data;
+      })
+      .catch(err => this.errorMsg = err.message || 'Error fetching todos');
   }
 };
 </script>

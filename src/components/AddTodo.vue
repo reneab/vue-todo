@@ -10,7 +10,7 @@
 
 <script>
 // package uuid imported with npm
-import uuid from 'uuid';
+// import uuid from 'uuid'; // Removed
 
 export default {
     name: "AddTodo",
@@ -24,9 +24,9 @@ export default {
         addTodo(e) {
             e.preventDefault(); // to prevent the actual submitting and refresh
             const newTodo = {
-                id: uuid.v4(),
+                // id: uuid.v4(), // Removed
                 title: this.title,
-                completed: false,
+                completed: false, // App.vue's addItem will get the final object from backend
                 dueDate: this.dueDate || null
             }
             // Send up to parent
