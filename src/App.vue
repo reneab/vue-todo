@@ -28,7 +28,8 @@ export default {
         {
           id: uuid.v4(),
           title: "A default, hard-coded todo",
-          completed: false
+          completed: false,
+          dueDate: null
         }
       ],
       errorMsg: ""
@@ -44,7 +45,7 @@ export default {
   },
   created() { // equivalent to init method
     axios.get("https://jsonplaceholder.typicode.com/todos?_limit=3")
-      .then(res => res.data.forEach(e => this.todos.push(e)))
+      .then(res => res.data.forEach(e => this.todos.push({...e, dueDate: null})))
       .catch(err => this.errorMsg = err);
   }
 };

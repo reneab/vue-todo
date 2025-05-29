@@ -2,6 +2,7 @@
   <div>
       <form @submit="addTodo">
           <input type="text" v-model="title" name="title" placeholder="Enter your next task..."/>
+          <input type="date" v-model="dueDate" name="dueDate"/>
           <input type="submit" value="Add" class="btn">
       </form>
   </div>
@@ -15,7 +16,8 @@ export default {
     name: "AddTodo",
     data() {
         return {
-            title: ''
+            title: '',
+            dueDate: ''
         }
     },
     methods: {
@@ -24,11 +26,13 @@ export default {
             const newTodo = {
                 id: uuid.v4(),
                 title: this.title,
-                completed: false
+                completed: false,
+                dueDate: this.dueDate || null
             }
             // Send up to parent
             this.$emit('add-todo', newTodo);
             this.title = '';
+            this.dueDate = '';
         }
     }
 }
@@ -44,6 +48,11 @@ export default {
 
     input[type="text"] {
         flex: 10;
+        padding: 5px;
+    }
+
+    input[type="date"] {
+        flex: 5; /* Adjust as needed */
         padding: 5px;
     }
 
