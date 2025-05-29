@@ -28,7 +28,7 @@ export default {
     .todo-item {
         background: #F4F4F4;
         padding: 10px;
-        /* width: 30%; */
+        width: 30%;
         margin-left: auto;
         margin-right: auto;
         text-align: left;

@@ -41,7 +41,7 @@ export default {
 <style>
     form {
         display: flex;
-        /* width: 31%; */
+        width: 31%;
         margin-right: auto;
         margin-left: auto;
     }
